@@ -7,17 +7,18 @@ password=$2
 fast=$3
 target=$4
 
-# setup mirrors
-if [ "$fast" -eq "1" ]; then
-    echo 'Setting up mirrors'
-    cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-    sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
-    rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
-else
-    echo 'Skipping mirror ranking because fast'
-fi
-
 if [ "$target" == "virtualbox" ]; then
+
+    # setup mirrors
+    if [ "$fast" -eq "0" ]; then
+        echo 'Setting up mirrors'
+        cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+        sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
+        rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+    else
+        echo 'Skipping mirror ranking because fast'
+    fi
+    
     # setup timezone
     echo 'Setting up timezone'
     timedatectl set-ntp true
@@ -39,8 +40,11 @@ fi
 # setup locale
 echo 'Setting up locale'
 sed -i 's/^#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
+sed -i 's/^#de_DE.UTF-8/de_DE.UTF-8/' /etc/locale.gen
 locale-gen
-echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+# German locale with English messages
+echo 'LANG=de_DE.UTF-8' > /etc/locale.conf
+echo 'LC_MESSAGES=en_US.UTF-8' >> /etc/locale.conf
 
 # build
 echo 'Building'
