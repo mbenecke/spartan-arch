@@ -8,7 +8,7 @@ fast=$3
 target=$4
 
 if [ target == "wsl2" ]; then
-    ln -s /mnt/c/Users/Marco/ ~/workspace
+    ln -s /mnt/c/Users/marco/work workspace
 fi
 
 # network on boot?
@@ -30,9 +30,13 @@ echo 'exec nitrogen --restore &' >> ~/.xinitrc
 echo 'exec emacs' >> ~/.xinitrc
 
 # emacs config
-#git clone https://github.com/abrochard/emacs-config.git
-#echo '(load-file "~/emacs-config/bootstrap.el")' > ~/.emacs
-#echo '(server-start)' >> ~/.emacs
+ln -s /mnt/c/Users/marco/work workspace
+ln -s /mnt/c/Users/marco/Dropbox/org-folder org
+if [ -d ~/.emacs.d ]; then
+    rm -r .emacs.d
+fi
+ln -s /mnt/c/Users/marco/.emacs.d .emacs.d
+ln -s /mnt/c/Users/marco/.doom.d .doom.d
 
 # cower & pacaur
 mkdir Downloads
@@ -96,11 +100,11 @@ git config --global code.editor emacsclient
 echo '    AddKeysToAgent yes' >> ~/.ssh/config
 
 # if there are ssh key
-if [ -d ~/workspace/ssh ]; then
+if [ -d /mnt/c/Users/marco/.ssh ]; then
     if [ -d ~/.ssh ]; then
         rm -rf ~/.ssh
     fi
-    ln -s ~/workspace/ssh ~/.ssh
+    ln -s /mnt/c/Users/marco/.ssh ~/.ssh
 fi
 
 # wallpaper setup
