@@ -12,7 +12,7 @@ This is a set of scripts designed to automate the creation of a minimal VM runni
 Boot the VM on archlinux iso and then run the command
 ```shell
 wget https://url.v7t.de/W -O install.sh
-bash install.sh [user] [password] [fast]
+$SHELL install.sh [user] [password] [fast]
 ```
 All arguments are optional and will be prompted for if not passed on invocation:
 - `[user]` is your username
