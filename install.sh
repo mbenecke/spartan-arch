@@ -58,8 +58,8 @@ use_wsl2(){
 
 _chroot_install(){
     # chroot
-    wget https://raw.githubusercontent.com/abrochard/spartan-arch/master/chroot-install.sh -O /mnt/chroot-install.sh
-    arch-chroot /mnt /bin/bash ./chroot-install.sh $user $password $fast
+    wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/chroot-install.sh -O /mnt/chroot-install.sh
+    arch-chroot /mnt /bin/bash ./chroot-install.sh $user $password $fast $target
 } # END: _chroot_install
 
 # main
@@ -81,9 +81,11 @@ read target
 
 case $target in
     "1"|"vbox"|"virtualbox")
+        target="virtualbox"
         global_settings ;;
         use_virtualbox ;;
     "2"|"wsl2")
+        target="wsl2"
         global_settings ;;
         use_wsl2 ;;
     *)
