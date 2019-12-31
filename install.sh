@@ -60,7 +60,7 @@ _chroot_install(){
     script='/mnt/chroot-install.sh'
     # chroot
     wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/chroot-install.sh -O $script
-    chmod +x 
+    chmod +x $script
     if [ "$target" == "virtualbox" ]; then
         local_cmd='arch-chroot /mnt /bin/bash'
     fi
