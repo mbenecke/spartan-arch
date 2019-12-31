@@ -2,25 +2,37 @@
 
 # Run install.sh first or this will fail due to missing dependencies
 
+user=$1
+password=$2
+fast=$3
+target=$4
+
+if [ target -eq "wsl2" ]; then
+    ln -s /mnt/c/Users/Marco/ ~/workspace
+fi
+
 # network on boot?
 read -t 1 -n 1000000 discard      # discard previous input
-sudo dhclient enp0s3
-echo 'Waiting for internet connection'
-
+if [ "$target" -eq "virtualbox" ]; then
+    sudo dhclient enp0s3
+    echo 'Waiting for internet connection'
+fi
 
 # xinitrc
 cd
 head -n -5 /etc/X11/xinit/xinitrc > ~/.xinitrc
-echo 'exec VBoxClient --clipboard -d &' >> ~/.xinitrc
-echo 'exec VBoxClient --display -d &' >> ~/.xinitrc
+if [ "$target" -eq "virtualbox" ]; then
+    echo 'exec VBoxClient --clipboard -d &' >> ~/.xinitrc
+    echo 'exec VBoxClient --display -d &' >> ~/.xinitrc
+fi
 echo 'exec i3 &' >> ~/.xinitrc
 echo 'exec nitrogen --restore &' >> ~/.xinitrc
 echo 'exec emacs' >> ~/.xinitrc
 
 # emacs config
-git clone https://github.com/abrochard/emacs-config.git
-echo '(load-file "~/emacs-config/bootstrap.el")' > ~/.emacs
-echo '(server-start)' >> ~/.emacs
+#git clone https://github.com/abrochard/emacs-config.git
+#echo '(load-file "~/emacs-config/bootstrap.el")' > ~/.emacs
+#echo '(server-start)' >> ~/.emacs
 
 # cower & pacaur
 mkdir Downloads
@@ -95,7 +107,7 @@ fi
 cd
 mkdir Pictures
 cd Pictures
-wget https://github.com/abrochard/spartan-arch/blob/master/wallpaper.jpg?raw=true -O wallpaper.jpg
+wget http://wallpaperstock.net/canyon-aerial-view-norway-wallpapers_53528_1920x1200.jpg -O wallpaper.jpg
 cd ~/.config/
 mkdir nitrogen
 cd nitrogen
@@ -117,7 +129,7 @@ go get -u github.com/jstemmer/gotags
 
 # temporary workaround
 cd
-wget https://raw.githubusercontent.com/abrochard/spartan-arch/master/startx.sh -O startx.sh
+wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/startx.sh -O startx.sh
 chmod +x startx.sh
 echo 'alias startx=~/startx.sh' >> ~/.zshrc
 
