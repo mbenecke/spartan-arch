@@ -11,13 +11,14 @@ This is a set of scripts designed to automate the creation of a minimal VM runni
 ## Installation
 Boot the VM on archlinux iso and then run the command
 ```shell
-wget https://goo.gl/ZPAMtT -O install.sh
+wget https://url.v7t.de/W -O install.sh
 bash install.sh [user] [password] [fast]
 ```
 All arguments are optional and will be prompted for if not passed on invocation:
 - `[user]` is your username
 - `[password]` is what you want the root and user password to be
 - `[fast]` is boolean 1 or 0 and controls using `rankmirrors` during set up which will be slow
+- `[target]` is optional to switch between VirtualBox or WSL2 Installations
 
 The install.sh script will run and then reboot the computer once done.
 
