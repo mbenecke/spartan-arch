@@ -8,8 +8,7 @@ fast=$3
 target=$4
 
 # setup mirrors
-if [ "$fast" -eq "1"]
-then
+if [ "$fast" -eq "1" ]; then
     echo 'Setting up mirrors'
     cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
     sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
@@ -18,7 +17,7 @@ else
     echo 'Skipping mirror ranking because fast'
 fi
 
-if [ "$target" -eq "virtualbox" ]; then
+if [ "$target" == "virtualbox" ]; then
     # setup timezone
     echo 'Setting up timezone'
     timedatectl set-ntp true
@@ -51,7 +50,7 @@ mkinitcpio -p linux
 echo 'Installing Xorg'
 pacman -S --noconfirm xorg xorg-xinit xterm
 
-if [ "$target" -eq "virtualbox" ]; then
+if [ "$target" == "virtualbox" ]; then
     # install virtualbox guest modules
     echo 'Installing VB-guest-modules'
     pacman -S --noconfirm virtualbox-guest-modules-arch virtualbox-guest-utils
