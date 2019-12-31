@@ -48,6 +48,9 @@ echo 'LC_MESSAGES=en_US.UTF-8' >> /etc/locale.conf
 
 # build
 echo 'Building'
+if [ ! -f /usr/bin/mkinitcpio ]; then
+    pacman -S --noconfirm mkinitcpio
+fi
 mkinitcpio -p linux
 
 # install Xorg
