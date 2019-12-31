@@ -94,6 +94,4 @@ systemctl enable ntpdate.service
 wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/post-install.sh -O /home/$user/post-install.sh 
 chown $user:$user /home/$user/post-install.sh
 
-/home/$user/post-install.sh $user $password $fast $target
-
 echo 'Done'
