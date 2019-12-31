@@ -7,7 +7,7 @@ password=$2
 fast=$3
 target=$4
 
-if [ target -eq "wsl2" ]; then
+if [ target == "wsl2" ]; then
     ln -s /mnt/c/Users/Marco/ ~/workspace
 fi
 
@@ -21,7 +21,7 @@ fi
 # xinitrc
 cd
 head -n -5 /etc/X11/xinit/xinitrc > ~/.xinitrc
-if [ "$target" -eq "virtualbox" ]; then
+if [ "$target" == "virtualbox" ]; then
     echo 'exec VBoxClient --clipboard -d &' >> ~/.xinitrc
     echo 'exec VBoxClient --display -d &' >> ~/.xinitrc
 fi
