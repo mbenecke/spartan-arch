@@ -22,13 +22,12 @@ global_settings()  {
             fast=0
         fi
     fi
-
-    # set time
-    timedatectl set-ntp true
-
 } # END: global_settings
 
 use_virtualbox() {
+    
+    # set time
+    timedatectl set-ntp true
 
     #partiton disk
     parted --script /dev/sda mklabel msdos mkpart primary ext4 0% 87% mkpart primary linux-swap 87% 100%
