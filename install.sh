@@ -82,12 +82,14 @@ read target
 case $target in
     "1"|"vbox"|"virtualbox")
         target="virtualbox"
-        global_settings ;;
-        use_virtualbox ;;
+        global_setting
+        use_virtualbox
+       ;;
     "2"|"wsl2")
         target="wsl2"
-        global_settings ;;
-        use_wsl2 ;;
+        global_settings
+        use_wsl2
+       ;;
     *)
        echo "${target} is not implemented yet, feel free to send a patch" ;;
 esac
