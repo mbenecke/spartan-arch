@@ -56,13 +56,15 @@ use_wsl2(){
 } # END: use_wsl2
 
 _chroot_install(){
-    local_cmd = $SHELL
+    local_cmd=$SHELL
+    script='/mnt/chroot-install.sh'
     # chroot
-    wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/chroot-install.sh -O /mnt/chroot-install.sh
+    wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/chroot-install.sh -O $script
+    chmod +x 
     if [ "$target" -eq "virtualbox" ]; then
         local_cmd='arch-chroot /mnt /bin/bash'
     fi
-     $local_cmd /mnt/chroot-install.sh $user $password $fast $target
+    $local_cmd $script $user $password $fast $target
 } # END: _chroot_install
 
 # main
