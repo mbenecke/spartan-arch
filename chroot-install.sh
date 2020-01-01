@@ -77,6 +77,7 @@ pacman -S --noconfirm aria2c bind-tools mtr liboping ranger jqv colordiff fd exa
 pacman -S --noconfirm lynis nethogs nmon reptyr
 npm install -g jscs jshint bower grunt
 pip install pipenv bpython ipython
+pip install pytest nose black pyflakes isort 
 
 # install req for pacaur & cower
 echo 'Installing dependencies'
