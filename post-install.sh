@@ -7,8 +7,7 @@ password=$2
 fast=$3
 target=$4
 
-if [ target == "wsl2" ]; then
-    ln -s /mnt/c/Users/marco/work workspace
+
 fi
 
 # network on boot?
@@ -30,13 +29,29 @@ echo 'exec nitrogen --restore &' >> ~/.xinitrc
 echo 'exec emacs' >> ~/.xinitrc
 
 # emacs config
-ln -s /mnt/c/Users/marco/work workspace
-ln -s /mnt/c/Users/marco/Dropbox/org-folder org
-if [ -d ~/.emacs.d ]; then
+if [ -d ~/.emacs.d ]; then                             #TODO: Backup, if a directory already exist
     rm -r .emacs.d
 fi
-ln -s /mnt/c/Users/marco/.emacs.d .emacs.d
-ln -s /mnt/c/Users/marco/.doom.d .doom.d
+if [ target == "wsl2" ]; then                          #TODO: Backup, if a directory already exist
+    ln -s /mnt/c/Users/marco/work ~/work
+    ln -s /mnt/c/Users/marco/Dropbox/org-folder org
+
+    if [ -d /mnt/c/Users/marco/.emacs.d ]; then
+        cp -r /mnt/c/Users/marco/.emacs.d ~/.emacs.d
+    fi
+    if [ -d /mnt/c/Users/marco/.doom.d ]; then
+        cp -r /mnt/c/Users/marco/.doom.d ~/.doom.d
+    fi
+    ~/.emacs.d/bin/doom refresh
+    # Initialize keyring
+    # This step is necessary for use pacman
+    sudo pacman-key --init
+    sudo pacman-key --populat
+else 
+    git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+    ~/.emacs.d/bin/doom install
+fi
+
 
 # cower & pacaur
 mkdir Downloads
