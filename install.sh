@@ -51,6 +51,10 @@ use_virtualbox() {
     reboot
 } # END: use_virtualbox
 
+use_wsl(){
+   _chroot_install
+} # END: use_wsl
+
 use_wsl2(){
    _chroot_install
 } # END: use_wsl2
@@ -64,7 +68,7 @@ _chroot_install(){
     if [ "$target" == "virtualbox" ]; then
         local_cmd='arch-chroot /mnt /bin/bash'
     fi
-    $local_cmd $script $user $password $fast $target
+    arch-chroot /mnt $local_cmd $script $user $password $fast $target
 } # END: _chroot_install
 
 # main
@@ -81,8 +85,9 @@ password="$2"
 fast="$3"
 target="$4"
 
-echo "Please chose your target: [1]: VirtualBox; [2]: WSL2"
+echo "Please chose your target: [1]: VirtualBox; [2]: WSL; [2]: WSL2"
 read target
+target=$( echo $target | tr '[:upper:]' '[:lower:]' )
 
 case $target in
     "1"|"vbox"|"virtualbox")
@@ -90,7 +95,12 @@ case $target in
         global_setting
         use_virtualbox
        ;;
-    "2"|"wsl2")
+    "2"|"wsl")
+        target="wsl"
+        global_settings
+        use_wsl
+       ;;
+    "3"|"wsl2")
         target="wsl2"
         global_settings
         use_wsl2

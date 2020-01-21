@@ -75,6 +75,9 @@ pacman -S --noconfirm python-pip go go-tools pkg-config base-devel htop
 # https://martin.leyrer.priv.at/downloads/talks/2019/gpn19%20-%20Moderne%20Kommandozeilentools%20published.pdf
 pacman -S --noconfirm aria2c bind-tools mtr liboping ranger jqv colordiff fd exa fzf pv progress 
 pacman -S --noconfirm lynis nethogs nmon reptyr
+#do a Installation from the package.txt, which is a clone from a golden source
+wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/packages.txt -o /home/$user/package.txt
+pacman -S --needed --noconfirm < /home/$user/packages.txt
 npm install -g jscs jshint bower grunt
 pip install pipenv bpython ipython
 pip install pytest nose black pyflakes isort 
