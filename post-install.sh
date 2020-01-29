@@ -7,9 +7,6 @@ password=$2
 fast=$3
 target=$4
 
-
-fi
-
 # network on boot?
 read -t 1 -n 1000000 discard      # discard previous input
 if [ "$target" -eq "virtualbox" ]; then
