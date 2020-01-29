@@ -46,6 +46,8 @@ locale-gen
 echo 'LANG=de_DE.UTF-8' > /etc/locale.conf
 echo 'LC_MESSAGES=en_US.UTF-8' >> /etc/locale.conf
 
+pacman -Sy
+
 # build
 echo 'Building'
 if [ ! -f /usr/bin/mkinitcpio ]; then
