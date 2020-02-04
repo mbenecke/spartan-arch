@@ -146,7 +146,7 @@ go get -u github.com/jstemmer/gotags
 if [ "$target" == "wsl2" ]; then
     export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
     setxkbmap -model pc104 -layout de,us -variant ,dvorak-intl -option grp:shifts_toggle -verbose 10  
-elif [ "$target == "virtualbox" ]; then
+elif [ "$target" == "virtualbox" ]; then
     # temporary workaround
     cd
     wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/startx.sh -O startx.sh
