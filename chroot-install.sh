@@ -7,9 +7,21 @@ password=$2
 fast=$3
 target=$4
 
-if [ "$target" == "virtualbox" ]; then
+_setup_timezone() {
+    # setup timezone
+    echo 'Setting up timezone'
+    timedatectl set-ntp true
+    ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+    timedatectl set-timezone Europe/Berlin
+    hwclock --systohc  
+}
 
+_setup_mirror() {
     # setup mirrors
+    fast=0
+    if [ ! -z $1 ]; then
+        fast=$1
+    fi
     if [ "$fast" -eq "0" ]; then
         echo 'Setting up mirrors'
         cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
@@ -18,24 +30,21 @@ if [ "$target" == "virtualbox" ]; then
     else
         echo 'Skipping mirror ranking because fast'
     fi
-    
-    # setup timezone
-    echo 'Setting up timezone'
-    timedatectl set-ntp true
-    ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
-    timedatectl set-timezone America/New_York
-    hwclock --systohc    
+}
 
+_setup_hostname() {
     # setup hostname
     echo 'Setting up hostname'
     echo 'arch-virtualbox' > /etc/hostname
+}
 
+_install_bootloader() {
     # install bootloader
     echo 'Installing bootloader'
     pacman -S grub --needed --noconfirm
     grub-install --target=i386-pc /dev/sda
     grub-mkconfig -o /boot/grub/grub.cfg
-fi
+}
 
 # setup locale
 echo 'Setting up locale'
@@ -46,6 +55,8 @@ locale-gen
 echo 'LANG=de_DE.UTF-8' > /etc/locale.conf
 echo 'LC_MESSAGES=en_US.UTF-8' >> /etc/locale.conf
 
+echo 'KEYMAP=dvorak' > /etc/vconsole.conf
+
 pacman -Syyu --noconfirm 
 
 # build
@@ -54,6 +65,11 @@ if [ ! -f /usr/bin/mkinitcpio ]; then
     pacman -S --needed --noconfirm mkinitcpio
 fi
 mkinitcpio -p linux
+
+_setup_mirror $fast 
+_setup_timezone
+_setup_hostname
+_install_bootloader
 
 # install Xorg
 echo 'Installing Xorg'
