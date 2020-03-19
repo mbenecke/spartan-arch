@@ -25,6 +25,15 @@ echo 'exec i3 &' >> ~/.xinitrc
 echo 'exec nitrogen --restore &' >> ~/.xinitrc
 echo 'exec emacs' >> ~/.xinitrc
 
+if [ $target == 'hyper-v' ]; then
+# https://wiki.archlinux.org/index.php/Hyper-V#Xorg
+    cd /tmp
+    git clone https://github.com/Microsoft/linux-vm-tools
+    cd linux-vm-tools/arch
+    ./makepkg.sh
+    ./install-config.sh
+fi
+
 # emacs config
 if [ -d ~/.emacs.d ]; then                             #TODO: Backup, if a directory already exist
     rm -r .emacs.d

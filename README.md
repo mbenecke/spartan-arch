@@ -11,6 +11,18 @@ Currently, the VM costs about 90MB of RAM to run.
 - Clipboard sharing in both directions enabled
 - Two shared folders `org` and `workspace` auto-mount and permanent
 
+## Pacman Package List
+
+Generate by:
+```shell
+pacman -Qqn > package.txt
+```
+Foreign (AUR) packages must be reinstalled separately; you can list them with:
+```shell
+pacman -Qqm > packaur.txt
+```
+
+
 ## Installation
 Boot the VM on archlinux iso and then run the command
 ```shell
