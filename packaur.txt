@@ -1,15 +1,6 @@
-auracle-git
 bgs-git
 cask
+emacs-all-the-icons
 emacs-pdf-tools-git
 emacs-tablist-git
 microsoft-python-language-server
-nerd-fonts-complete
-nodejs-markdownlint-cli
-pacaur
-ruby-markdownlint
-ruby-mixlib-cli
-ruby-mixlib-config
-ruby-tomlrb
-xorgxrdp-devel-git
-xrdp
