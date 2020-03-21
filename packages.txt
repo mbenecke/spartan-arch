@@ -375,7 +375,6 @@ nspr
 nss
 ntp
 oniguruma
-openbsd-netcat
 opencore-amr
 openjpeg2
 openssh
