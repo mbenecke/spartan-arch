@@ -96,6 +96,16 @@ pacman -S --needed --noconfirm lynis nethogs nmon reptyr broot
 #do a Installation from the package.txt, which is a clone from a golden source
 wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/packages.txt -o /home/$user/package.txt
 pacman -S --needed --noconfirm < /home/$user/packages.txt
+
+#Install https://aur.archlinux.org/packages/pacaur/
+cd /usr/src
+git clone https://aur.archlinux.org/pacaur.git
+cd pacaur
+makepkg -si
+
+
+
+
 npm install -g jscs jshint bower grunt
 pip install pipenv bpython ipython
 pip install pytest nose black pyflakes isort 
