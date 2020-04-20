@@ -95,6 +95,7 @@ pacman -S --needed --noconfirm aria2c bind-tools mtr liboping ranger jqv colordi
 pacman -S --needed --noconfirm lynis nethogs nmon reptyr broot
 #do a Installation from the package.txt, which is a clone from a golden source
 wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/packages.txt -o /home/$user/package.txt
+<<<<<<< HEAD
 pacman -S --needed --noconfirm < /home/$user/packages.txt
 
 #Install https://aur.archlinux.org/packages/pacaur/
@@ -105,6 +106,23 @@ makepkg -si
 
 
 
+=======
+pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort /home/$user/packages.txt))
+
+chgrp nobody /usr/src
+chmod g+ws /usr/src
+setfacl -m u::rwx,g::rwx /usr/src
+setfacl -d --set u::rwx,g::rwx,o::- /usr/src
+cd /usr/src
+https://aur.archlinux.org/auracle-git.git
+cd /usr/src/auracle-git
+sudo -u nobody makepkg -si
+https://aur.archlinux.org/pacaur.git
+cd /usr/src/pacaur
+sudo -u nobody makepkg -si
+wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/packaur.txt -o /home/$user/packaur.txt
+pacaur -S --needed --noconfirm --noedit $( sort /hom/$user/packaur.txt)
+>>>>>>> origin/master
 
 npm install -g jscs jshint bower grunt
 pip install pipenv bpython ipython
