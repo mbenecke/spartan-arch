@@ -41,7 +41,7 @@ _setup_hostname() {
 _install_bootloader() {
     # install bootloader
     echo 'Installing bootloader'
-    pacman -S grub --noconfirm
+    pacman -S grub --needed --noconfirm
     grub-install --target=i386-pc /dev/sda
     grub-mkconfig -o /boot/grub/grub.cfg
 }
@@ -62,7 +62,7 @@ pacman -Syyu --noconfirm
 # build
 echo 'Building'
 if [ ! -f /usr/bin/mkinitcpio ]; then
-    pacman -S --noconfirm mkinitcpio
+    pacman -S --needed --noconfirm mkinitcpio
 fi
 mkinitcpio -p linux
 
@@ -73,12 +73,12 @@ _install_bootloader
 
 # install Xorg
 echo 'Installing Xorg'
-pacman -S --noconfirm xorg xorg-xinit xterm
+pacman -S --needed --noconfirm xorg xorg-xinit xterm
 
 if [ "$target" == "virtualbox" ]; then
     # install virtualbox guest modules
     echo 'Installing VB-guest-modules'
-    pacman -S --noconfirm virtualbox-guest-modules-arch virtualbox-guest-utils
+    pacman -S --needed --noconfirm virtualbox-guest-modules-arch virtualbox-guest-utils
 
     # vbox modules
     echo 'vboxsf' > /etc/modules-load.d/vboxsf.conf
@@ -86,23 +86,51 @@ fi
 
 # install dev envt.
 echo 'Installing dev environment'
-pacman -S --noconfirm git emacs zsh nodejs npm vim wget perl make gcc grep tmux i3 dmenu
-pacman -S --noconfirm chromium curl openssh sudo mlocate the_silver_searcher
-pacman -S --noconfirm ttf-hack lxterminal nitrogen ntp dhclient keychain
-pacman -S --noconfirm python-pip go go-tools pkg-config base-devel htop
+pacman -S --needed --noconfirm git emacs zsh nodejs npm vim wget perl make gcc grep tmux i3 dmenu
+pacman -S --needed --noconfirm chromium curl openssh sudo mlocate the_silver_searcher
+pacman -S --needed --noconfirm ttf-hack lxterminal nitrogen ntp dhclient keychain
+pacman -S --needed --noconfirm python-pip go go-tools pkg-config base-devel htop
 # https://martin.leyrer.priv.at/downloads/talks/2019/gpn19%20-%20Moderne%20Kommandozeilentools%20published.pdf
-pacman -S --noconfirm aria2c bind-tools mtr liboping ranger jqv colordiff fd exa fzf pv progress 
-pacman -S --noconfirm lynis nethogs nmon reptyr
+pacman -S --needed --noconfirm aria2c bind-tools mtr liboping ranger jqv colordiff fd exa fzf pv progress 
+pacman -S --needed --noconfirm lynis nethogs nmon reptyr broot
 #do a Installation from the package.txt, which is a clone from a golden source
 wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/packages.txt -o /home/$user/package.txt
+<<<<<<< HEAD
 pacman -S --needed --noconfirm < /home/$user/packages.txt
+
+#Install https://aur.archlinux.org/packages/pacaur/
+cd /usr/src
+git clone https://aur.archlinux.org/pacaur.git
+cd pacaur
+makepkg -si
+
+
+
+=======
+pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort /home/$user/packages.txt))
+
+chgrp nobody /usr/src
+chmod g+ws /usr/src
+setfacl -m u::rwx,g::rwx /usr/src
+setfacl -d --set u::rwx,g::rwx,o::- /usr/src
+cd /usr/src
+https://aur.archlinux.org/auracle-git.git
+cd /usr/src/auracle-git
+sudo -u nobody makepkg -si
+https://aur.archlinux.org/pacaur.git
+cd /usr/src/pacaur
+sudo -u nobody makepkg -si
+wget https://raw.githubusercontent.com/mbenecke/spartan-arch/master/packaur.txt -o /home/$user/packaur.txt
+pacaur -S --needed --noconfirm --noedit $( sort /hom/$user/packaur.txt)
+>>>>>>> origin/master
+
 npm install -g jscs jshint bower grunt
 pip install pipenv bpython ipython
 pip install pytest nose black pyflakes isort 
 
 # install req for pacaur & cower
 echo 'Installing dependencies'
-pacman -S --noconfirm expac fakeroot yajl openssl
+pacman -S --needed --noconfirm expac fakeroot yajl openssl
 
 # user mgmt
 echo 'Setting up user'

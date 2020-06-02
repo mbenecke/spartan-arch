@@ -1,0 +1,17 @@
+auracle-git
+betterlockscreen
+bgs-git
+cask
+emacs-all-the-icons
+emacs-memoize
+emacs-pdf-tools-git
+emacs-tablist-git
+microsoft-python-language-server
+pacaur
+ttf-all-the-icons
+ttf-atom-file-icons
+ttf-font-awesome-4
+ttf-material-design-icons
+ttf-octicons
+ttf-weather-icons
+woff2-git

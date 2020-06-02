@@ -24,17 +24,20 @@ global_settings()  {
     fi
 } # END: global_settings
 
-use_virtualbox() {
-    
-    # set time
-    timedatectl set-ntp true
-
+_partition_hd() {
     #partiton disk
     parted --script /dev/sda mklabel msdos mkpart primary ext4 0% 87% mkpart primary linux-swap 87% 100%
     mkfs.ext4 /dev/sda1
     mkswap /dev/sda2
     swapon /dev/sda2
     mount /dev/sda1 /mnt
+}
+use_virtualbox() {
+    
+    # set time
+    timedatectl set-ntp true
+
+    _partition_hd
 
     # pacstrap
     pacstrap /mnt base
@@ -58,6 +61,10 @@ use_wsl(){
 use_wsl2(){
    _chroot_install
 } # END: use_wsl2
+
+use_hyper-v(){
+   _chroot_install
+} # END: use_hyper-v
 
 _chroot_install(){
     local_cmd=$SHELL
@@ -85,8 +92,12 @@ password="$2"
 fast="$3"
 target="$4"
 
-echo "Please chose your target: [1]: VirtualBox; [2]: WSL; [2]: WSL2"
-read target
+if [ -z "$4" ]; then
+    echo "Please chose your target: [1]: VirtualBox; [2]: WSL; [3]: WSL2; [4]: Hyper-V"
+    read target
+else
+    target="$4"
+fi
 target=$( echo $target | tr '[:upper:]' '[:lower:]' )
 
 case $target in
@@ -104,6 +115,11 @@ case $target in
         target="wsl2"
         global_settings
         use_wsl2
+       ;;
+    "4"|"hyper-v")
+        target="hyper-v"
+        global_settings
+        use_hyper-v
        ;;
     *)
        echo "${target} is not implemented yet, feel free to send a patch" ;;
